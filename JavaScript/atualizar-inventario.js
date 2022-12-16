@@ -14,12 +14,22 @@ function updateInventory(arr1, arr2) {
         }        
         else{
             /*
-                Segundo caso: Consulta retornou algum valor. Atualizar      
-                quantidades.
+                Segundo caso: Consulta retornou algum valor.
             */
             if(product[0] !== item[0]){
-                product[0] = item[0];
-                result.push(product);
+                /*
+                    Caso a consulta tenha retornado um valor mas as quantidas estejam
+                    diferentes.
+                */
+                product[0] = item[0]; // atualiza quantidade
+                result.push(product); // adiciona na lista
+            }
+            else{
+                /*
+                    Caso a consulta tenha retornado algum valor mas as quantidades 
+                    estejam iguais
+                */
+                result.push(product); // somente adiciona na lista
             }     
         }
     }
@@ -37,6 +47,7 @@ function updateInventory(arr1, arr2) {
         }
     });
     console.log(result);
+    console.log(result.length);
     return result;
 }
 
