@@ -2,6 +2,7 @@ function updateInventory(arr1, arr2) {
     let curInv = arr1.slice(); /* Inventário atual */
     let newInv = arr2.slice(); /* Novo inventário */
     let result = []; /* resultado da operação */
+
     for(let item of newInv){
         let product = curInv.filter(prod => prod[1] === item[1])[0];
 
@@ -21,7 +22,7 @@ function updateInventory(arr1, arr2) {
                     Caso a consulta tenha retornado um valor mas as quantidas estejam
                     diferentes.
                 */
-                product[0] = item[0]; // atualiza quantidade
+                product[0] = item[0] + product[0]; // atualiza quantidade
                 result.push(product); // adiciona na lista
             }
             else{
@@ -33,6 +34,22 @@ function updateInventory(arr1, arr2) {
             }     
         }
     }
+
+    /*
+        Verificar os itens do inventario que não foram adicionados na verificação
+        anterior
+    */
+   for(let item of curInv){
+        /*
+            O caso dos itens que estão no inventário atual mas não no novo.
+            Atualiza resultado.
+        */
+        let product = result.filter(prod => prod[1] === item[1])[0];
+        if(product === undefined){
+            result.push(item);
+        } 
+   }
+
     /*
         Ordenar os itens de forma alfabética
     */
@@ -46,8 +63,6 @@ function updateInventory(arr1, arr2) {
                 return 1;
         }
     });
-    console.log(result);
-    console.log(result.length);
     return result;
 }
 
@@ -67,3 +82,20 @@ var newInv = [
 ];
 
 updateInventory(curInv, newInv);
+
+console.log(
+    updateInventory(
+        [
+            [21, "Bowling Ball"], 
+            [2, "Dirty Sock"], 
+            [1, "Hair Pin"], 
+            [5, "Microphone"]
+        ], 
+        [
+            [2, "Hair Pin"], 
+            [3, "Half-Eaten Apple"], 
+            [67, "Bowling Ball"], 
+            [7, "Toothpaste"]
+        ]
+    )
+)
